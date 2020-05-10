@@ -1,0 +1,1 @@
+{"path":"C:\\Video_HR\\HR_pic\\053.jpg","outputs":{"object":[{"name":"big_screw","bndbox":{"xmin":601,"ymin":617,"xmax":645,"ymax":660}},{"name":"big_screw","bndbox":{"xmin":1107,"ymin":622,"xmax":1153,"ymax":666}}]},"time_labeled":1568297591493,"labeled":true,"size":{"width":1920,"height":1080,"depth":3}}
