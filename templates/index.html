@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>海尔螺丝钉识别</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script type="application/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
+    <script type="application/javascript" src="/static/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav aria-label="breadcrumb ">
+    <ol class="breadcrumb container">
+        <li class="breadcrumb-item active" aria-current="page">海尔螺丝钉识别</li>
+    </ol>
+</nav>
+<div class="container">
+    <form action="javascript:void(0);">
+        <div class="form-group">
+            <label for="exampleFormControlFile1" class="h6">请选择一张图片测试</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1" name="img">
+
+        </div>
+        <div class="form-group">
+            <fieldset class="h6">预览</fieldset>
+            <div style="width: 120px;height: 120px;border-style: solid; border-width:1px;">
+                <img class="pull-right" src="" alt="" id="show"
+                     style="width: 100%;height: 100%">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">提交识别</button>
+        </div>
+    </form>
+
+    <div class="breadcrumb">
+        <h4>识别结果: <span id="resp_text"></span></h4>
+        <div class="content">
+            <img src="" id="resp_img" alt="">
+        </div>
+    </div>
+
+
+</div>
+<script>
+    var img = "";
+    $('#exampleFormControlFile1').bind('change', function (e) {
+        var files = this.files;
+        if (files.length) {
+            // 对文件进行处理，下面会讲解checkFile()会做什么
+            checkFile(this.files);
+        }
+    });
+
+
+    function checkFile(files) {
+        var file = files[0];
+        var reader = new FileReader();
+        // show表示<div id='show'></div>，用来展示图片预览的
+        if (!/image\/\w+/.test(file.type)) {
+            show.innerHTML = "请确保文件为图像类型";
+            return false;
+        }
+        // onload是异步操作
+        reader.onload = function (e) {
+            $("#show").attr("src", e.target.result);
+            img = e.target.result
+        };
+        reader.readAsDataURL(file);
+    }
+
+    $("button").click(function () {
+        $("#resp_imgs>img").remove();
+        $("#resp_detail>div").remove();
+
+        $.ajax({
+            url: "/",
+            type: "post",
+            dataType: "text",
+            data: {
+                "img": img
+            }, success: function (resp) {
+                // console.log(resp);
+                $("#resp_img").attr("src","data:image/jpeg;base64,"+resp)
+
+
+            }
+        })
+
+
+    });
+
+</script>
+
+
+</body>
+</html>
